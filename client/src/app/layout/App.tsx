@@ -8,7 +8,6 @@ import HomePage from "../../features/home/HomePage";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import AboutPage from "../../features/about/AboutPage";
 import ContactUs from "../../features/contact/ContactUs";
-import  { createBrowserHistory } from 'history'
 
 
 function App() {
@@ -30,7 +29,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Header darkMode={darkMode} handleThemeChange={handleThemeChange}/>
+        <Header darkMode={darkMode} handleThemeChange={handleThemeChange} theme={theme}/>
         <Container>
             <Routes>
                 <Route path={'/'} element={<HomePage />} />
