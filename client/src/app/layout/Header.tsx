@@ -1,5 +1,5 @@
 import {
-    AppBar, Badge,
+    AppBar, Badge, Box,
     FormControlLabel, IconButton,
     List,
     ListItem,
@@ -12,11 +12,12 @@ import {
 import {NavLink} from "react-router-dom";
 import {ShoppingCart} from "@mui/icons-material";
 
-interface Props{
+interface Props {
     darkMode: boolean;
     handleThemeChange: () => void;
     theme: Theme;
 }
+
 const midLinks = [
     {title: 'catalog', path: '/catalog'},
     {title: 'about', path: '/about'},
@@ -26,8 +27,19 @@ const rightLinks = [
     {title: 'login', path: '/login'},
     {title: 'register', path: '/register'}
 ]
-export default function Header({darkMode, handleThemeChange, theme} : Props) {
-    const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+
+const navBarTheme = [
+    {color: 'inherit', typography: 'h6',
+        '&:hover':{
+            color: 'grey.500'
+        },
+        '&:active': {
+            color: 'text.secondary'
+        }}
+]
+
+export default function Header({darkMode, handleThemeChange, theme}: Props) {
+    const MaterialUISwitch = styled(Switch)(({theme}) => ({
         width: 62,
         height: 34,
         padding: 7,
@@ -74,37 +86,41 @@ export default function Header({darkMode, handleThemeChange, theme} : Props) {
         },
     }));
 
-    return(
+    return (
         <AppBar position='static' sx={{mb: 4}}>
             <Toolbar>
-                <Typography variant='h6' component={NavLink} to={'/'} sx={{
-                    color: 'inherit', textDecoration: 'none'
-                }}>
+                <Typography variant='h6' component={NavLink} to={'/'} sx={navBarTheme}>
                     RE-STORE
                 </Typography>
 
                 <List sx={{display: 'flex', ml: 4}}>
                     {midLinks.map(({title, path}, index) => (
                         <ListItem component={NavLink} to={path} key={path}
-                            sx={{color: 'inherit', typography: 'h6'}}>
+                                  sx={navBarTheme}>
                             {title.toUpperCase()}
                         </ListItem>
                     ))}
                 </List>
-                <IconButton size={'large'} sx={{color: 'white'}}>
-                    <Badge badgeContent={4} color={'secondary'}>
-                        <ShoppingCart />
-                    </Badge>
-                </IconButton>
-                <List sx={{display: 'flex', ml: 4}}>
-                    {rightLinks.map(({title, path}, index) => (
-                        <ListItem component={NavLink} to={path} key={path}
-                            sx={{color: 'inherit', typography: 'h6'}}>
-                            {title.toUpperCase()}
-                        </ListItem>
-                    ))}
-                </List>
-                <FormControlLabel sx={{ml: 3}} control={<MaterialUISwitch onChange={handleThemeChange} checked={darkMode} />} label={'Dark Mode'}/>
+                <Box sx={{
+                    display: 'flex', marginLeft: 'auto'
+                }}>
+                    <IconButton size={'large'} sx={{color: 'white'}}>
+                        <Badge badgeContent={4} color={'secondary'}>
+                            <ShoppingCart/>
+                        </Badge>
+                    </IconButton>
+                    <List sx={{display: 'flex', ml: 4}}>
+                        {rightLinks.map(({title, path}, index) => (
+                            <ListItem component={NavLink} to={path} key={path}
+                                      sx={navBarTheme}>
+                                {title.toUpperCase()}
+                            </ListItem>
+                        ))}
+                    </List>
+                    <FormControlLabel sx={{ml: 3}}
+                                      control={<MaterialUISwitch onChange={handleThemeChange} checked={darkMode}/>}
+                                      label={'Dark Mode'}/>
+                </Box>
             </Toolbar>
         </AppBar>
     )
