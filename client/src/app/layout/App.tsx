@@ -8,6 +8,9 @@ import HomePage from "../../features/home/HomePage";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import AboutPage from "../../features/about/AboutPage";
 import ContactUs from "../../features/contact/ContactUs";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import ServerError from "../Errors/ServerError";
 
 
 function App() {
@@ -28,6 +31,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+        <ToastContainer theme='colored' position='bottom-right' hideProgressBar />
         <CssBaseline />
         <Header darkMode={darkMode} handleThemeChange={handleThemeChange} theme={theme}/>
         <Container>
@@ -37,22 +41,8 @@ function App() {
                 <Route path={'/catalog/:id'} element={<ProductDetails />} />
                 <Route path={'//about'} element={<AboutPage />} />
                 <Route path={'/contact'} element={<ContactUs />} />
+                <Route path={'/server-error'} element={<ServerError />} />
             </Routes>
-                {/*<Route path={'/'}>
-                <HomePage/>
-            </Route>
-                <Route path={'/catalog'}>
-                    <Catalog/>
-                </Route>
-                <Route path={'/catalog/:id'}>
-                    <ProductDetails/>
-                </Route>
-                <Route path={'/about'}>
-                    <AboutPage/>
-                </Route>
-                <Route path={'/contact'}>
-                    <ContactUs/>
-                </Route>*/}
         </Container>
     </ThemeProvider>
   );

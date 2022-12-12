@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,12 +19,13 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
 
 app.UseHttpsRedirection();

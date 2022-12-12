@@ -2,12 +2,11 @@
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+// ReSharper disable HeapView.BoxingAllocation
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController : ControllerBase
+public class ProductsController : BaseApiController
 {
     // DI
     private readonly StoreContext _context;
@@ -23,12 +22,16 @@ public class ProductsController : ControllerBase
         
         return Ok(products);
     }
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<Product>> GetProduct(int id)
     {
         var product = await _context.Products.FindAsync(id);
-        
-        return Ok(product);
+        if (product is not null)
+        {
+            return Ok(product);
+        }
+
+        return NotFound();
     }
     
 }

@@ -1,17 +1,17 @@
-import {Fragment, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
-import axios from "axios";
 import {IProduct} from "../../app/models/IProduct";
+import agent from "../../app/api/agent";
 
 export default function ProductDetails(){
     const {id} = useParams<{id: string}>();
     const [product, setProduct] = useState<IProduct | null>(null);
     const [loading, setLoading] = useState(true);
     useEffect(()=> {
-        axios.get(`https://localhost:44323/api/products/${id}`)
-            .then(response => setProduct(response.data))
-            .catch(error => console.log(error))
+        agent.Catalog.details(parseInt(id as string))
+            .then(response => setProduct(response))
+            .catch(error => console.log(error.response))
             .finally(()=> setLoading(false))
     }, [id])
 
